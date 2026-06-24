@@ -1,7 +1,6 @@
 <template>
   <div class="public-layout">
 
-    <!-- PUBLIC HEADER -->
     <header class="public-header">
       <div class="public-header-inner">
         <RouterLink to="/blog" class="public-logo">📝 My Blog</RouterLink>
@@ -12,12 +11,20 @@
       </div>
     </header>
 
-    <!-- POST NOT FOUND -->
-    <div class="public-container" v-if="!post">
+    <!-- LOADING -->
+    <div class="public-container" v-if="loading">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading post...</p>
+      </div>
+    </div>
+
+    <!-- NOT FOUND -->
+    <div class="public-container" v-else-if="notFound || !post">
       <div class="public-empty" style="margin-top: 60px;">
         <p style="font-size: 48px;">404</p>
         <p>Post not found.</p>
-        <RouterLink to="/blog" class="btn btn-primary" style="margin-top: 16px; display:inline-flex;">
+        <RouterLink to="/blog" class="btn btn-primary" style="margin-top:16px; display:inline-flex;">
           ← Back to Blog
         </RouterLink>
       </div>
@@ -26,55 +33,41 @@
     <!-- POST CONTENT -->
     <div v-else>
 
-      <!-- POST HERO -->
       <div class="post-hero" :class="`cover-${post.category || 'default'}`">
         <div class="post-hero-inner">
           <span class="post-hero-category">{{ post.category || 'general' }}</span>
           <h1 class="post-hero-title">{{ post.title }}</h1>
-          <p class="post-hero-date">{{ formatDate(post.date) }}</p>
+          <p class="post-hero-date">{{ formatDate(post.createdAt) }}</p>
         </div>
       </div>
 
-      <!-- POST BODY -->
       <div class="public-container">
         <div class="post-body-wrap">
 
-          <!-- BACK LINK -->
           <RouterLink to="/blog" class="post-back">← Back to all posts</RouterLink>
 
-          <!-- CONTENT -->
-          <div class="post-content">
-            <p>{{ post.content }}</p>
-          </div>
+          <div class="post-content" v-html="post.content"></div>
 
-          <!-- POST FOOTER -->
           <div class="post-footer">
-            <span class="badge badge-published" v-if="post.status === 'published'">
-              Published
-            </span>
-            <RouterLink
-              :to="`/posts/edit/${post.id}`"
-              class="btn btn-outline"
-              style="font-size: 13px;"
-            >
+            <span class="badge badge-published" v-if="post.status === 'published'">Published</span>
+            <RouterLink :to="`/posts/edit/${post._id}`" class="btn btn-outline" style="font-size:13px;">
               ✏️ Edit in CMS
             </RouterLink>
           </div>
 
-          <!-- RELATED POSTS -->
           <div class="related-posts" v-if="relatedPosts.length > 0">
             <h3>Related posts</h3>
             <div class="related-grid">
               <RouterLink
                 v-for="related in relatedPosts"
-                :key="related.id"
+                :key="related._id"
                 :to="`/blog/${related.slug}`"
                 class="related-card"
               >
                 <div class="related-cover" :class="`cover-${related.category || 'default'}`"></div>
                 <div class="related-info">
                   <p class="related-title">{{ related.title }}</p>
-                  <p class="related-date">{{ formatDate(related.date) }}</p>
+                  <p class="related-date">{{ formatDate(related.createdAt) }}</p>
                 </div>
               </RouterLink>
             </div>
@@ -84,7 +77,6 @@
       </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="public-footer">
       <p>© 2026 My Blog. Built with Vue.js</p>
     </footer>
@@ -93,30 +85,44 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { usePostsStore } from '../../stores/posts.js'
+import { postsApi } from '../../services/api.js'
 import { useFormatDate } from '../../composables/useFormatDate.js'
 
-const route = useRoute()
-const store = usePostsStore()
-
-// Find post by slug from URL
-const post = computed(() =>
-  store.posts.find(p => p.slug === route.params.slug && p.status === 'published')
-)
-
-// Related posts — same category, exclude current
-const relatedPosts = computed(() => {
-  if (!post.value) return []
-  return store.posts
-    .filter(p =>
-      p.id !== post.value.id &&
-      p.category === post.value.category &&
-      p.status === 'published'
-    )
-    .slice(0, 3)
-})
-
+const route          = useRoute()
 const { formatDate } = useFormatDate()
+
+const post         = ref(null)
+const relatedPosts = ref([])
+const loading      = ref(true)
+const notFound     = ref(false)
+
+onMounted(async () => {
+  const slug = route.params.slug
+
+  if (!slug) {
+    notFound.value = true
+    loading.value  = false
+    return
+  }
+
+  try {
+    post.value = await postsApi.getBySlug(slug)
+
+    if (post.value) {
+      const all = await postsApi.getAll({
+        status:   'published',
+        category: post.value.category,
+      })
+      relatedPosts.value = all
+        .filter(p => p._id !== post.value._id)
+        .slice(0, 3)
+    }
+  } catch (err) {
+    notFound.value = true
+  } finally {
+    loading.value = false
+  }
+})
 </script>
