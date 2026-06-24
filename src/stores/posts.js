@@ -94,14 +94,14 @@ export const usePostsStore = defineStore('posts', () => {
   // ============================================
 
   return {
-    // state
     posts,
-    // getters
+    loading,
+    error,
     totalPosts,
     publishedPosts,
     draftPosts,
     getPostById,
-    // actions
+    fetchPosts,    // ← must be here
     addPost,
     updatePost,
     deletePost,
