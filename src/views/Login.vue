@@ -51,9 +51,9 @@
 
       <!-- HINT -->
       <div class="login-hint">
-        <p>Demo credentials:</p>
+        <!-- <p>Demo credentials:</p>
         <p>📧 prashant@cms.com / 🔑 admin123</p>
-        <p>📧 editor@cms.com / 🔑 edit123</p>
+        <p>📧 editor@cms.com / 🔑 edit123</p> -->
       </div>
 
     </div>
