@@ -42,8 +42,8 @@ export const usePostsStore = defineStore('posts', () => {
 
   // Find one post by id
   function getPostById(id) {
-    return posts.value.find(p => p._id === id)
-  }
+    return posts.value.find(p => p._id === id || p._id?.toString() === id)
+    }
 
   // ============================================
   // ACTIONS — functions that modify state

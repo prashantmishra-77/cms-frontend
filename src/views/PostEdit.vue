@@ -145,11 +145,12 @@ watch(() => form.value.title, (newTitle) => {
 
 onMounted(async () => {
   if (isEditing.value) {
-    const id   = route.params.id
+    const id = route.params.id
+
     // First check local store
     let post = store.getPostById(id)
 
-    // If not in store, fetch from API
+    // If not in store fetch from API directly
     if (!post) {
       try {
         post = await postsApi.getById(id)
@@ -160,13 +161,15 @@ onMounted(async () => {
       }
     }
 
-    form.value = {
-      title:         post.title,
-      slug:          post.slug,
-      content:       post.content,
-      status:        post.status,
-      category:      post.category,
-      featuredImage: post.featuredImage || '',
+    if (post) {
+      form.value = {
+        title:         post.title,
+        slug:          post.slug,
+        content:       post.content,
+        status:        post.status,
+        category:      post.category,
+        featuredImage: post.featuredImage || '',
+      }
     }
   }
 })
