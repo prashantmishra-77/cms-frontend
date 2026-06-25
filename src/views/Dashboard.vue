@@ -8,38 +8,55 @@
 
     <!-- STAT CARDS -->
     <div class="stats-row">
-      <div class="stat-card">
-        <span class="stat-icon">📝</span>
-        <span class="stat-number">{{ postStore.totalPosts }}</span>
-        <span class="stat-label">Total Posts</span>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-purple">
+            <i class="ti ti-article" aria-hidden="true"></i>
+          </div>
+          <span class="stat-number">{{ postStore.totalPosts }}</span>
+          <span class="stat-label">Total Posts</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-green">
+            <i class="ti ti-circle-check" aria-hidden="true"></i>
+          </div>
+          <span class="stat-number">{{ postStore.publishedPosts.length }}</span>
+          <span class="stat-label">Published</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-amber">
+            <i class="ti ti-pencil" aria-hidden="true"></i>
+          </div>
+          <span class="stat-number">{{ postStore.draftPosts.length }}</span>
+          <span class="stat-label">Drafts</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-blue">
+            <i class="ti ti-photo" aria-hidden="true"></i>
+          </div>
+          <span class="stat-number">{{ mediaStore.totalFiles }}</span>
+          <span class="stat-label">Media Files</span>
+        </div>
       </div>
-      <div class="stat-card">
-        <span class="stat-icon">✅</span>
-        <span class="stat-number">{{ postStore.publishedPosts.length }}</span>
-        <span class="stat-label">Published</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">✏️</span>
-        <span class="stat-number">{{ postStore.draftPosts.length }}</span>
-        <span class="stat-label">Drafts</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-icon">🖼️</span>
-        <span class="stat-number">{{ mediaStore.totalFiles }}</span>
-        <span class="stat-label">Media Files</span>
-      </div>
-    </div>
 
     <!-- CHARTS ROW -->
     <div class="charts-row">
 
       <!-- Posts by Status — Doughnut -->
-      <div class="chart-card">
-        <h3>Posts by status</h3>
-        <div class="chart-wrap">
-          <canvas ref="doughnutRef"></canvas>
-        </div>
-      </div>
+      <!-- Doughnut chart card -->
+<div class="chart-card">
+  <h3><i class="ti ti-chart-donut" aria-hidden="true"></i> Posts by status</h3>
+  <div class="chart-wrap">
+    <canvas ref="doughnutRef"></canvas>
+  </div>
+</div>
+
+<!-- Bar chart card -->
+<div class="chart-card chart-card-wide">
+  <h3><i class="ti ti-chart-bar" aria-hidden="true"></i> Posts by category</h3>
+  <div class="chart-wrap">
+    <canvas ref="barRef"></canvas>
+  </div>
+</div>
 
       <!-- Posts by Category — Bar -->
       <div class="chart-card chart-card-wide">
@@ -89,22 +106,22 @@
           <h3>Quick actions</h3>
         </div>
         <div class="quick-actions">
-          <RouterLink to="/posts/new" class="quick-action-btn">
-            <span>📝</span>
-            <span>New Post</span>
-          </RouterLink>
-          <RouterLink to="/media" class="quick-action-btn">
-            <span>🖼️</span>
-            <span>Upload Media</span>
-          </RouterLink>
-          <RouterLink to="/posts" class="quick-action-btn">
-            <span>📋</span>
-            <span>Manage Posts</span>
-          </RouterLink>
-          <RouterLink to="/settings" class="quick-action-btn">
-            <span>⚙️</span>
-            <span>Settings</span>
-          </RouterLink>
+            <RouterLink to="/posts/new" class="quick-action-btn">
+              <i class="ti ti-plus" aria-hidden="true"></i>
+              <span>New Post</span>
+            </RouterLink>
+            <RouterLink to="/media" class="quick-action-btn">
+              <i class="ti ti-upload" aria-hidden="true"></i>
+              <span>Upload Media</span>
+            </RouterLink>
+            <RouterLink to="/posts" class="quick-action-btn">
+              <i class="ti ti-list" aria-hidden="true"></i>
+              <span>All Posts</span>
+            </RouterLink>
+            <RouterLink to="/settings" class="quick-action-btn">
+              <i class="ti ti-settings" aria-hidden="true"></i>
+              <span>Settings</span>
+            </RouterLink>
         </div>
 
         <!-- CMS HEALTH -->

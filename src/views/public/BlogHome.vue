@@ -26,18 +26,16 @@
 
       <div v-else>
         <div class="blog-tabs">
-          <button
-            class="blog-tab"
-            :class="{ 'blog-tab-active': activeCategory === 'all' }"
-            @click="activeCategory = 'all'"
-          >All</button>
-          <button
-            v-for="cat in categories"
-            :key="cat"
+          <button class="blog-tab" :class="{ 'blog-tab-active': activeCategory === 'all' }"
+            @click="activeCategory = 'all'">
+            <i class="ti ti-layout-grid" aria-hidden="true"></i> All
+          </button>
+          <button v-for="cat in categories" :key="cat"
             class="blog-tab"
             :class="{ 'blog-tab-active': activeCategory === cat }"
-            @click="activeCategory = cat"
-          >{{ cat }}</button>
+            @click="activeCategory = cat">
+            {{ cat }}
+          </button>
         </div>
 
         <p class="public-post-count">
@@ -52,14 +50,28 @@
             class="blog-card"
           >
             <div class="blog-card-cover" :class="`cover-${post.category || 'default'}`">
-              <span class="cover-category">{{ post.category || 'general' }}</span>
+              <span class="cover-category">
+                <i class="ti" :class="{
+                  'ti-cpu':      post.category === 'technology',
+                  'ti-palette':  post.category === 'design',
+                  'ti-briefcase':post.category === 'business',
+                  'ti-heart':    post.category === 'lifestyle',
+                  'ti-tag':      !post.category,
+                }" aria-hidden="true"></i>
+                {{ post.category || 'general' }}
+              </span>
             </div>
             <div class="blog-card-body">
               <h2 class="blog-card-title">{{ post.title }}</h2>
               <p class="blog-card-excerpt">{{ excerpt(post.content) }}</p>
               <div class="blog-card-meta">
-                <span class="blog-card-date">{{ formatDate(post.createdAt) }}</span>
-                <span class="blog-read-more">Read more →</span>
+                <span class="blog-card-date">
+                  <i class="ti ti-calendar" aria-hidden="true"></i>
+                  {{ formatDate(post.createdAt) }}
+                </span>
+                <span class="blog-read-more">
+                  Read more <i class="ti ti-arrow-right" aria-hidden="true"></i>
+                </span>
               </div>
             </div>
           </RouterLink>

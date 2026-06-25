@@ -2,14 +2,23 @@
   <div class="public-layout">
 
     <header class="public-header">
-      <div class="public-header-inner">
-        <RouterLink to="/blog" class="public-logo">📝 My Blog</RouterLink>
-        <nav class="public-nav">
-          <RouterLink to="/blog">Home</RouterLink>
-          <a href="/">Admin ↗</a>
-        </nav>
+  <div class="public-header-inner">
+    <RouterLink to="/blog" class="public-logo">
+      <div class="public-logo-icon">
+        <i class="ti ti-pencil" aria-hidden="true"></i>
       </div>
-    </header>
+      My Blog
+    </RouterLink>
+    <nav class="public-nav">
+      <RouterLink to="/blog">
+        <i class="ti ti-home" aria-hidden="true"></i> Home
+      </RouterLink>
+      <a href="/">
+        Admin <i class="ti ti-external-link" aria-hidden="true"></i>
+      </a>
+    </nav>
+  </div>
+</header>
 
     <!-- LOADING -->
     <div class="public-container" v-if="loading">
@@ -44,8 +53,14 @@
       <div class="public-container">
         <div class="post-body-wrap">
 
-          <RouterLink to="/blog" class="post-back">← Back to all posts</RouterLink>
+          <RouterLink to="/blog" class="post-back">
+              <i class="ti ti-arrow-left" aria-hidden="true"></i> Back to all posts
+            </RouterLink>
 
+            <p class="post-hero-date">
+              <i class="ti ti-calendar" aria-hidden="true"></i>
+              {{ formatDate(post.createdAt) }}
+            </p>
           <div class="post-content" v-html="post.content"></div>
 
           <div class="post-footer">

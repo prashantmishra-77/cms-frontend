@@ -57,14 +57,14 @@
 
     <table class="cms-table" v-if="paginatedPosts.length > 0">
       <thead>
-        <tr>
-          <th @click="sortBy('id')" class="sortable"># {{ sortIcon('id') }}</th>
-          <th @click="sortBy('title')" class="sortable">Title {{ sortIcon('title') }}</th>
-          <th>Category</th>
-          <th @click="sortBy('status')" class="sortable">Status {{ sortIcon('status') }}</th>
-          <th @click="sortBy('date')" class="sortable">Date {{ sortIcon('date') }}</th>
-          <th>Actions</th>
-        </tr>
+          <tr>
+            <th><i class="ti ti-hash" style="font-size:13px;vertical-align:-2px" aria-hidden="true"></i></th>
+            <th @click="sortBy('title')" class="sortable">Title {{ sortIcon('title') }}</th>
+            <th>Category</th>
+            <th @click="sortBy('status')" class="sortable">Status {{ sortIcon('status') }}</th>
+            <th @click="sortBy('date')" class="sortable">Date {{ sortIcon('date') }}</th>
+            <th>Actions</th>
+          </tr>
       </thead>
       <tbody>
         <tr v-for="(post, index) in paginatedPosts" :key="post._id">
@@ -75,18 +75,25 @@
             </div>
           </td>
           <td>
-            <span v-if="post.category" class="category-tag">{{ post.category }}</span>
-            <span v-else style="color:#ccc;">—</span>
+            <span v-if="post.category" class="category-tag">
+              <i class="ti ti-tag" aria-hidden="true"></i>
+              {{ post.category }}
+            </span>
           </td>
           <td>
             <span class="badge" :class="post.status === 'published' ? 'badge-published' : 'badge-draft'">
-              {{ post.status }}
+                  <i class="ti" :class="post.status === 'published' ? 'ti-circle-check' : 'ti-clock'" aria-hidden="true"></i>
+                  {{ post.status }}
             </span>
           </td>
           <td :title="post.createdAt">{{ formatRelative(post.createdAt) }}</td>
           <td class="action-buttons">
-            <RouterLink :to="`/posts/edit/${post._id}`" class="btn btn-outline">Edit</RouterLink>
-            <button class="btn btn-danger" @click="handleDelete(post._id)">Delete</button>
+            <RouterLink :to="`/posts/edit/${post._id}`" class="btn btn-outline" style="padding:6px 10px">
+              <i class="ti ti-edit" aria-hidden="true"></i>
+            </RouterLink>
+            <button class="btn btn-danger" @click="handleDelete(post._id)" style="padding:6px 10px">
+              <i class="ti ti-trash" aria-hidden="true"></i>
+            </button>
           </td>
         </tr>
       </tbody>

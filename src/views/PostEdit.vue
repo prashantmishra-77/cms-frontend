@@ -49,8 +49,7 @@
       <div class="post-edit-sidebar">
 
         <div class="post-sidebar-card">
-          <h3>Publish</h3>
-
+          <h3><i class="ti ti-send" aria-hidden="true"></i> Publish</h3>
           <div class="form-group">
             <label>Status</label>
             <select v-model="form.status">
@@ -79,7 +78,7 @@
         </div>
 
         <div class="post-sidebar-card">
-          <h3>Featured Image</h3>
+          <h3><i class="ti ti-photo" aria-hidden="true"></i> Featured Image</h3>
 
           <div class="featured-image-preview" v-if="form.featuredImage">
             <img :src="form.featuredImage" alt="Featured" />
@@ -90,7 +89,7 @@
           </div>
 
           <div class="featured-image-empty" v-else @click="showImagePicker = true">
-            <span>🖼️</span>
+              <i class="ti ti-photo-plus" aria-hidden="true"></i>
             <p>Click to set featured image</p>
           </div>
         </div>

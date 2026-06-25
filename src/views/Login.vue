@@ -2,15 +2,19 @@
   <div class="login-page">
     <div class="login-card">
 
-      <!-- LOGO -->
-      <div class="login-logo">📝 My CMS</div>
-      <h1 class="login-title">Welcome back</h1>
-      <p class="login-subtitle">Sign in to your CMS account</p>
+    <!-- Logo -->
+        <div class="login-logo">
+          <div class="login-logo-icon">
+            <i class="ti ti-pencil" aria-hidden="true"></i>
+          </div>
+          <span class="login-logo-text">My CMS</span>
+        </div>
 
-      <!-- ERROR MESSAGE -->
-      <div class="login-error" v-if="errorMessage">
-        {{ errorMessage }}
-      </div>
+        <!-- Error -->
+        <div class="login-error" v-if="errorMessage">
+          <i class="ti ti-alert-circle" aria-hidden="true"></i>
+          {{ errorMessage }}
+        </div>
 
       <!-- LOGIN FORM -->
       <div class="form-group">

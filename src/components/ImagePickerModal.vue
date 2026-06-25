@@ -7,8 +7,10 @@
 
       <!-- HEADER -->
       <div class="modal-header">
-        <h2>Select Image</h2>
-        <button class="modal-close" @click="$emit('close')">✕</button>
+          <h2><i class="ti ti-photo-search" aria-hidden="true"></i> Select Image</h2>
+          <button class="modal-close" @click="$emit('close')" aria-label="Close">
+            <i class="ti ti-x" aria-hidden="true"></i>
+          </button>
       </div>
 
       <!-- UPLOAD STRIP -->

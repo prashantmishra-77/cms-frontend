@@ -8,9 +8,11 @@
         :class="`toast-${toast.type}`"
         @click="toastStore.remove(toast.id)"
       >
-        <span class="toast-icon">{{ icons[toast.type] }}</span>
+        <i class="ti" :class="icons[toast.type]" aria-hidden="true"></i>
         <span class="toast-message">{{ toast.message }}</span>
-        <button class="toast-close">✕</button>
+        <button class="toast-close" aria-label="Close">
+          <i class="ti ti-x" aria-hidden="true"></i>
+        </button>
       </div>
     </transition-group>
   </div>
@@ -22,9 +24,9 @@ import { useToastStore } from '../stores/toast.js'
 const toastStore = useToastStore()
 
 const icons = {
-  success: '✅',
-  error:   '❌',
-  info:    'ℹ️',
-  warning: '⚠️',
+  success: 'ti-circle-check',
+  error:   'ti-alert-circle',
+  info:    'ti-info-circle',
+  warning: 'ti-alert-triangle',
 }
 </script>

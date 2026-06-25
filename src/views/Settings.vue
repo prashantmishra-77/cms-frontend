@@ -14,7 +14,7 @@
 
     <!-- GENERAL SETTINGS -->
     <div class="settings-section">
-      <h2>General</h2>
+      <h2><i class="ti ti-adjustments" aria-hidden="true"></i> General</h2>
 
       <div class="form-group">
         <label>CMS Name</label>
@@ -44,8 +44,8 @@
 
     <!-- ACCOUNT SETTINGS -->
     <div class="settings-section">
-      <h2>Account</h2>
-
+      <h2><i class="ti ti-user-circle" aria-hidden="true"></i> Account</h2>
+      
       <div class="form-group">
         <label>Logged in as</label>
         <input :value="authStore.username" disabled />
